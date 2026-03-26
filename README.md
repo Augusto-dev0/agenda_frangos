@@ -156,6 +156,7 @@ O relatório gerado inclui:
 
 [![GitHub](https://img.shields.io/badge/GitHub-Augusto--dev0-f97316?style=flat-square&logo=github)](https://github.com/Augusto-dev0)
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-luiz--augusto7x-f97316?style=flat-square&logo=linkedin)](https://linkedin.com/in/luiz-augusto7x)
+[![Instagram](https://img.shields.io/badge/Instagram-luiz--augusto7x-f97316?style=flat-square&logo=instagram)](https://www.instagram.com/luiz.augusto7x/)
 
 ---
 
