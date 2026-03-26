@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f97316">
+  <title>Avícola Paraíso — Agenda de Pedidos</title>
+
+  <link rel="shortcut icon" href="imagens/Avicola.ico" type="image/x-icon">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <link rel="stylesheet" href="main.css">
+</head>
+<body>
+
+  <!-- TOAST -->
+  <div id="toast" class="toast">
+    <i id="toast-icon" class="fas fa-check-circle"></i>
+    <span id="toast-msg">Mensagem</span>
+  </div>
+
+  <!-- MODAL CONFIRMAR TEMA -->
+  <div id="modal-tema" class="modal-overlay">
+    <div class="modal-box modal-tema-box">
+      <div class="modal-hd">
+        <span><i class="fas fa-palette"></i> Alterar Tema</span>
+      </div>
+      <p id="modal-tema-txt" style="font-size:.92rem;color:var(--txt2);line-height:1.6;margin-bottom:20px;"></p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;">
+        <button class="btn-laranja" id="btn-confirmar-tema">
+          <i class="fas fa-check"></i> Confirmar
+        </button>
+        <button class="btn-cinza" onclick="cancelarTema()">
+          <i class="fas fa-times"></i> Cancelar
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL OBSERVAÇÕES -->
+  <div id="modal" class="modal-overlay">
+    <div class="modal-box">
+      <div class="modal-hd">
+        <span><i class="fas fa-file-lines"></i> Observações</span>
+        <button id="modal-close"><i class="fas fa-xmark"></i></button>
+      </div>
+      <p id="modal-text"></p>
+      <button class="btn-laranja" onclick="closeModal()">Fechar</button>
+    </div>
+  </div>
+
+  <div class="wrap">
+
+    <!-- TOPO -->
+    <header class="topo">
+      <div class="topo-marca">
+        <div class="logo-box"><i class="fas fa-drumstick-bite"></i></div>
+        <div>
+          <h1>Avícola Paraíso</h1>
+          <p class="subtitulo">Gerenciamento de Pedidos</p>
+        </div>
+      </div>
+      <button class="toggle-tema" id="toggle-tema" onclick="pedirTrocaTema()">
+        <i id="tema-icon" class="fas fa-moon"></i>
+      </button>
+    </header>
+
+    <!-- ALERTAS PROATIVOS -->
+    <div id="alertas-section" style="display:none;">
+      <div class="card" style="margin-bottom:22px;">
+        <h2 class="card-titulo"><i class="fas fa-bell"></i> Alertas</h2>
+        <div id="alertas-lista" class="alertas-grid"></div>
+      </div>
+    </div>
+
+    <!-- CARDS RESUMO -->
+    <div class="resumo-grid">
+      <div class="resumo-card laranja">
+        <i class="fas fa-drumstick-bite"></i>
+        <div><span>Frangos Pedidos</span><strong id="stat-frangos">0</strong></div>
+      </div>
+      <div class="resumo-card azul-escuro">
+        <i class="fas fa-clipboard-list"></i>
+        <div><span>Total de Pedidos</span><strong id="stat-pedidos">0</strong></div>
+      </div>
+      <div class="resumo-card verde">
+        <i class="fas fa-circle-check"></i>
+        <div><span>Entregues</span><strong id="stat-entregues">0</strong></div>
+      </div>
+      <div class="resumo-card vermelho">
+        <i class="fas fa-hourglass-half"></i>
+        <div><span>Não Entregues</span><strong id="stat-pendentes">0</strong></div>
+      </div>
+    </div>
+
+    <main>
+
+      <!-- FORMULÁRIO -->
+      <section class="card">
+        <h2 class="card-titulo"><i class="fas fa-plus-circle"></i> Novo Pedido</h2>
+        <form id="form-pedido">
+          <input type="hidden" id="edit-idx" value="">
+          <div class="form-grid">
+            <div class="campo span2">
+              <label>Nome do Cliente</label>
+              <input type="text" id="inp-cliente" placeholder="Ex: João da Silva" required minlength="2">
+            </div>
+            <div class="campo">
+              <label>Quantidade de Frangos</label>
+              <input type="number" id="inp-qtd" min="1" value="1" required>
+            </div>
+            <div class="campo">
+              <label>Data do Pedido</label>
+              <input type="date" id="inp-data">
+            </div>
+            <div class="campo">
+              <label>Status de Entrega</label>
+              <select id="sel-entrega">
+                <option value="pending">Em processo...</option>
+                <option value="delivered">Entregue</option>
+              </select>
+            </div>
+            <div class="campo">
+              <label>Status de Pagamento</label>
+              <select id="sel-pagamento">
+                <option value="pending">Pendente</option>
+                <option value="paid">Pago</option>
+              </select>
+            </div>
+            <div class="campo span4">
+              <label>Observações</label>
+              <textarea id="inp-obs" placeholder="Ex: cortar em peças, embalar separadamente..."></textarea>
+            </div>
+            <div class="form-acoes span4">
+              <button type="submit" class="btn-laranja" id="btn-salvar">
+                <i class="fas fa-save"></i> Salvar Pedido
+              </button>
+              <button type="button" class="btn-cinza" id="btn-limpar">
+                <i class="fas fa-broom"></i> Limpar
+              </button>
+            </div>
+          </div>
+        </form>
+      </section>
+
+      <!-- CALENDÁRIO -->
+      <section class="card">
+        <h2 class="card-titulo"><i class="fas fa-calendar-days"></i> Calendário de Pedidos</h2>
+        <div class="cal-nav">
+          <button class="btn-cinza btn-cal-nav" onclick="mudarMesCal(-1)">
+            <i class="fas fa-chevron-left"></i>
+          </button>
+          <span id="cal-titulo" class="cal-titulo"></span>
+          <button class="btn-cinza btn-cal-nav" onclick="mudarMesCal(1)">
+            <i class="fas fa-chevron-right"></i>
+          </button>
+        </div>
+        <div class="cal-grid-head">
+          <span>Dom</span><span>Seg</span><span>Ter</span>
+          <span>Qua</span><span>Qui</span><span>Sex</span><span>Sáb</span>
+        </div>
+        <div id="cal-grid" class="cal-grid"></div>
+        <div class="cal-legenda">
+          <span><span class="cal-dot cal-dot-pedido"></span> Com pedido</span>
+          <span><span class="cal-dot cal-dot-hoje"></span> Hoje</span>
+        </div>
+      </section>
+
+      <!-- TABELA -->
+      <section class="card">
+        <h2 class="card-titulo"><i class="fas fa-list-alt"></i> Pedidos Registrados</h2>
+
+        <!-- Filtros -->
+        <div class="filtros-row">
+          <div class="filtro-grupo">
+            <label><i class="fas fa-magnifying-glass"></i> Buscar cliente</label>
+            <input type="text" id="filtro-busca" placeholder="Digite o nome...">
+          </div>
+          <div class="filtro-grupo">
+            <label>Entrega</label>
+            <select id="filtro-entrega">
+              <option value="">Todos</option>
+              <option value="pending">Em processo</option>
+              <option value="delivered">Entregue</option>
+            </select>
+          </div>
+          <div class="filtro-grupo">
+            <label>Pagamento</label>
+            <select id="filtro-pagamento">
+              <option value="">Todos</option>
+              <option value="pending">Pendente</option>
+              <option value="paid">Pago</option>
+            </select>
+          </div>
+          <button class="btn-limpar-filtro" onclick="limparFiltros()">
+            <i class="fas fa-xmark"></i> Limpar
+          </button>
+        </div>
+
+        <!-- Barra -->
+        <div class="tabela-barra">
+          <span id="lbl-count" class="lbl-count"></span>
+          <button class="btn-cinza" onclick="exportarPDF()">
+            <i class="fas fa-file-pdf"></i> Exportar PDF
+          </button>
+        </div>
+
+        <div class="tabela-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Cliente</th>
+                <th>Qtd.</th>
+                <th>Data</th>
+                <th>Entrega</th>
+                <th>Pagamento</th>
+                <th>Obs.</th>
+                <th>Ações</th>
+              </tr>
+            </thead>
+            <tbody id="tabela-body"></tbody>
+          </table>
+          <div id="sem-pedidos" class="vazio">
+            <i class="fas fa-box-open"></i>
+            <p>Nenhum pedido ainda.</p>
+            <small>Adicione um novo pedido para começar!</small>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <footer class="rodape">
+      <p>Avícola Paraíso &copy; <span id="ano"></span> · Desenvolvido por Luiz Augusto</p>
+      <div class="rodape-links">
+        <a href="https://github.com/Augusto-dev0" target="_blank"><i class="fab fa-github"></i></a>
+        <a href="https://linkedin.com/in/luiz-augusto7x" target="_blank"><i class="fab fa-linkedin"></i></a>
+      </div>
+    </footer>
+
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
