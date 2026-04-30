@@ -149,16 +149,6 @@ O relatório gerado inclui:
 - Rodapé com número de páginas em todas as folhas
 
 ---
-## 📄 Licença
-
-![License: Proprietary](https://img.shields.io/badge/licen%C3%A7a-Propriet%C3%A1ria-red)
-
-Licença proprietária — todos os direitos reservados ao autor.
-Nenhuma permissão é concedida para uso, cópia, modificação ou distribuição deste conteúdo sem autorização prévia e por escrito.
-
-Consulte o arquivo [`LICENSE`](./LICENSE) para os termos completos.
-
----
 
 ## 📬 Contato
 
@@ -170,6 +160,13 @@ Consulte o arquivo [`LICENSE`](./LICENSE) para os termos completos.
 
 ---
 
-<div align="center">
-© 2026 Avícola Paraíso — Todos os direitos reservados
-</div>
+## 📄 Licença
+
+![License: Proprietary](https://img.shields.io/badge/licen%C3%A7a-Propriet%C3%A1ria-red)
+
+Licença proprietária — todos os direitos reservados ao autor.
+Nenhuma permissão é concedida para uso, cópia, modificação ou distribuição deste conteúdo sem autorização prévia e por escrito.
+
+Consulte o arquivo [`LICENSE`](./LICENSE) para os termos completos.
+
+---
